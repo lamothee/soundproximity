@@ -41,8 +41,9 @@ function draw() {
     let eyeR = pose.rightEye;
     let eyeL = pose.leftEye;
     let d = dist(eyeR.x, eyeR.y, eyeL.x, eyeL.y);
+
     fill(0, 0, 255);
-    osc.freq(d*20);
+    osc.freq(d*40);
     osc.amp(.2);
     console.log(d);
     tint(d*2, d/2, d/2);
