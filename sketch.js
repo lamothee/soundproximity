@@ -9,15 +9,17 @@ let poseNet;
 let pose;
 let skeleton;
 let osc;
+var env;
 
 function setup() {
-  createCanvas(640, 480);
+  createCanvas(640, 480, WEBGL);
   video = createCapture(VIDEO);
   video.hide();
   poseNet = ml5.poseNet(video, modelLoaded);
   poseNet.on('pose', gotPoses);
   osc = new p5.Oscillator();
-
+env = new p5.Envelope
+env.setADSR();
 
 }
 
@@ -35,6 +37,7 @@ function modelLoaded() {
 }
 
 function draw() {
+  translate(-width / 2, -height / 2)
   image(video, 0, 0);
 
   if (pose) {
@@ -45,8 +48,12 @@ function draw() {
     fill(0, 0, 255);
     osc.freq(d*40);
     osc.amp(.2);
-    console.log(d);
-    tint(d*2, d/2, d/2);
+
+    push();
+    translate(pose.nose.x, pose.nose.y, d / 4);
+    rotateX(frameCount * 0.01);
+    rotateY(frameCount * 0.01);
+    box(100);
 
   }
 }
